@@ -21,14 +21,13 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh "mvn clean test -Dtest=example.TestRun -s mvnsettings.xml"
+                        sh "mvn clean test -Dtest=example.TestRun"
                     } catch (Exception e) {
                         currentBuild.result = 'UNSTABLE'
                     }
                 }
             }
         }
-    }
 
     post {
         always {

@@ -10,7 +10,8 @@ public class TestRun {
     private static final Logger logger = LogManager.getLogger(TestRun.class);
     @Test
     public void testAll() {
-        SuiteResult result = Runner.path("src/test/java/example")
-                                .outputHtmlReport(true).parallel(1);
+        SuiteResult result = Runner.path("classpath:example")
+                .outputHtmlReport(true)
+                .parallel(1);
     }
 }
