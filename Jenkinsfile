@@ -10,7 +10,7 @@ pipeline {
                 script {
                     try {
                         // -Dtest kısmında kendi Runner sınıf adını yazdığından emin ol
-                        sh "mvn test -Dtest=TestRun -s mvnsettings.xml"
+                        sh "mvn test -Dtest=example.TestRun -s mvnsettings.xml"
                     } catch (Exception e) {
                         // Testler fail olsa bile pipeline'ın devam etmesini sağlar
                         currentBuild.result = 'UNSTABLE'
