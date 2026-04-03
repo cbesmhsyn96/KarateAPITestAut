@@ -29,18 +29,19 @@ pipeline {
             }
         }
 
-    post {
-        always {
-            publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'target/karate-reports',
-                    reportFiles: 'index.html',
-                    reportName: 'Karate Report'
-            ])
+        post {
+            always {
+                publishHTML(target: [
+                        allowMissing         : false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll              : true,
+                        reportDir            : 'target/karate-reports',
+                        reportFiles          : 'index.html',
+                        reportName           : 'Karate Report'
+                ])
 
-            echo 'Pipeline tamamlandı.'
+                echo 'Pipeline tamamlandı.'
+            }
         }
     }
 }
