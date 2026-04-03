@@ -43,8 +43,6 @@ pipeline {
                     reportFiles          : 'index.html',
                     reportName           : 'Karate Report'
             ])
-
-            echo 'Pipeline tamamlandı.'
         }
     }
 }
