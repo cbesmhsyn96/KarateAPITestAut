@@ -1,27 +1,37 @@
 pipeline {
     agent any
+
     tools {
         maven 'maven3'
         jdk 'jdk21'
     }
+
+    environment {
+        PATH = "${tool 'jdk21'}/bin:${tool 'maven3'}/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${env.PATH}"
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/cbesmhsyn96/KarateAPITestAut.git', branch: 'main'
+            }
+        }
+
         stage('Karate Test') {
             steps {
                 script {
                     try {
-                        // -Dtest kısmında kendi Runner sınıf adını yazdığından emin ol
-                        sh "mvn test -Dtest=example.TestRun -s mvnsettings.xml"
+                        sh "mvn clean test -Dtest=example.TestRun -s mvnsettings.xml"
                     } catch (Exception e) {
-                        // Testler fail olsa bile pipeline'ın devam etmesini sağlar
                         currentBuild.result = 'UNSTABLE'
                     }
                 }
             }
         }
     }
+
     post {
         always {
-            // HTML Publisher eklentisi yüklü olmalıdır
             publishHTML(target: [
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
@@ -30,6 +40,8 @@ pipeline {
                     reportFiles: 'index.html',
                     reportName: 'Karate Report'
             ])
+
+            echo 'Pipeline tamamlandı.'
         }
     }
 }
