@@ -32,17 +32,15 @@ pipeline {
 
     post {
         always {
-            script {
-                System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
-            }
             publishHTML(target: [
                     allowMissing         : false,
                     alwaysLinkToLastBuild: true,
                     keepAll              : true,
                     reportDir            : 'target/karate-reports',
-                    reportFiles          : 'index.html',
+                    reportFiles          : 'karate-summary.html', // Logda bu isim görünüyor, bunu kullanalım
                     reportName           : 'Karate Report'
             ])
+            echo 'Pipeline tamamlandı.'
         }
     }
 }
