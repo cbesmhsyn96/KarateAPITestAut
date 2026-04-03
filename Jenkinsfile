@@ -1,9 +1,4 @@
 pipeline {
-    agent {
-        node {
-            label 'spot_security'
-        }
-    }
     tools {
         maven 'maven3'
         jdk 'jdk21'
