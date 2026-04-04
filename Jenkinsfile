@@ -20,11 +20,7 @@ pipeline {
         stage('Karate Test') {
             steps {
                 script {
-                    try {
-                        sh "mvn clean test -Dtest=example.TestRun"
-                    } catch (Exception e) {
-                        currentBuild.result = 'UNSTABLE'
-                    }
+                    sh "mvn clean test -Dtest=users.TestRun"
                 }
             }
         }
@@ -32,15 +28,23 @@ pipeline {
 
     post {
         always {
+            cucumber buildStatus: 'UNSTABLE',
+                    fileIncludePattern: '**/cucumber.json',
+                    jsonReportDirectory: 'target/karate-reports',
+                    sortingMethod: 'ALPHABETICAL'
+
             publishHTML(target: [
                     allowMissing         : false,
                     alwaysLinkToLastBuild: true,
                     keepAll              : true,
-                    reportDir            : 'target/karate-reports',
-                    reportFiles          : 'karate-summary.html', // Logda bu isim görünüyor, bunu kullanalım
-                    reportName           : 'Karate Report'
+                    reportDir            : 'target/cucumber-html-reports',
+                    reportFiles          : 'overview-features.html',
+                    reportName           : 'Cucumber Detailed Report'
             ])
-            echo 'Pipeline tamamlandı.'
+
+            junit '**/target/surefire-reports/*.xml'
+
+            echo 'Pipeline ve Raporlama tamamlandı.'
         }
     }
 }
