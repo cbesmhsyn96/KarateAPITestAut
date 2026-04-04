@@ -29,7 +29,7 @@ pipeline {
     post {
         always {
             cucumber buildStatus: 'UNSTABLE',
-                    fileIncludePattern: '**/cucumber.json',
+                    fileIncludePattern: '**/*.json',
                     jsonReportDirectory: 'target/karate-reports',
                     sortingMethod: 'ALPHABETICAL'
 
